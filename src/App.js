@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Nav from './components/Nav/Nav.js';
+import BarChart from './components/BarChart/BarChart.js';
 
 
 function App() {
@@ -20,30 +21,16 @@ function App() {
 
   useEffect(fetchAPIData, []);
 
-  function calculateBarHeight(exchangeRate) {
-    let height = 50 / exchangeRate
-    return height
-  }
-
   return (
     <div className="graph">
         <Nav 
           fetchAPIData = {fetchAPIData}
         />
-          <div className="graph-data" id="graph-location">
-          {
-            apiData.filter(([currency, exchangeRate]) => displayCountries.includes(currency)).map(([currency, exchangeRate]) => (
-            <div 
-            className="graph-data-bar" 
-            onClick={() => alert(`1 USD = ${exchangeRate.toFixed(2)} ${currency}`)} 
-            style= {{height: calculateBarHeight(exchangeRate)+ "%"}}>
-              <div className="graph-data-bar-country-name">
-            {currency}
-            </div>
-            </div>
-            ))
-          }
-          </div>
+        <BarChart
+          apiData = {apiData}
+          displayCountries = {displayCountries}
+        />
+          
         </div>
   );
 }
